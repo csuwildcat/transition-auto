@@ -8,7 +8,7 @@ than finding the Higgs Boson with a magnifying glass. Luckily you've come to the
 The following is a simple 3 step process for `height: auto;` transitioning any element:
 
 1. Drop the JS file from this repo in your page
-2. Add an initial height and `transition` value to an element in CSS as you normally would, for example:
+2. Add initial height and transition values to elements in CSS as you normally would, for example:
 
     ```css
     div {
