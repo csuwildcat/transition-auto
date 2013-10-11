@@ -14,7 +14,7 @@ The following is a simple 3 step process for `height: auto;` transitioning any e
     div {
         height: 0px; /* this can be any value */
         overflow: hidden;
-        transition: height 2s;
+        transition: height 1s;
     }
     ```
 
