@@ -57,11 +57,20 @@
         }
       };
 
-	doc.addEventListener('animationstart', animationstart, false);
-	doc.addEventListener('webkitAnimationStart', animationstart, false);
-	doc.addEventListener('transitionend', transitionend, false);
-	doc.addEventListener('webkitTransitionEnd', transitionend, false);
-	
+    if (!doc.addEventListener) {
+        // attachEvent for IE :|
+        doc.attachEvent('animationstart', animationstart);
+        doc.attachEvent('webkitAnimationStart', animationstart);
+        doc.attachEvent('transitionend', transitionend);
+        doc.attachEvent('webkitTransitionEnd', transitionend);
+    }
+    else {
+        doc.addEventListener('animationstart', animationstart, false);
+        doc.addEventListener('webkitAnimationStart', animationstart, false);
+        doc.addEventListener('transitionend', transitionend, false);
+        doc.addEventListener('webkitTransitionEnd', transitionend, false);
+    }
+
 	/*
 		Batshit readyState/DOMContentLoaded code to dance around Webkit/Chrome animation auto-run weirdness on initial page load.
 		If they fixed their code, you could just check for if(doc.readyState != 'complete') in animationstart's if(loading) check
@@ -71,12 +80,25 @@
 			loading = false;
 		});
 	}
-	else doc.addEventListener('DOMContentLoaded', function(e){
-		skipFrame(function(){
-			loading = false;
 		});
-	}, false);
 	
+	else {
+        if (!doc.addEventListener) {
+            doc.attachEvent('DOMContentLoaded', function(e){
+                skipFrame(function(){
+                    loading = false;
+                });
+            });
+        } else {
+            doc.addEventListener('DOMContentLoaded', function(e){
+                skipFrame(function(){
+                    loading = false;
+                });
+            }, false);
+        }
+
+    }
+
 	/* Styles that allow for 'reveal' attribute triggers */
 	var styles = doc.createElement('style'),
 		t = 'transition: none; ',
